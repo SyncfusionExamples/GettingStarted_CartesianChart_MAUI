@@ -27,7 +27,10 @@ namespace ChartGettingStarted
         public MainPage()
         {
             InitializeComponent();           
+            Grid grid = new Grid();
             SfCartesianChart chart = new SfCartesianChart(); 
+            grid.Add(chart);
+            this.Content = grid; 
         }
     }   
 }
@@ -71,36 +74,36 @@ namespace ChartGettingStarted
 Now, let us define a simple data model that represents a data point in the chart.
 ######
 ```C#
-public class Person   
+public class PersonModel   
 {   
     public string Name { get; set; }
     public double Height { get; set; }
 }
 ```
-Next, create a view model class and initialize a list of `Person` objects as follows.
+Next, create a PersonViewModel class and initialize a list of `PersonModel` objects as follows.
 ###### C#
 ```C#
-public class ViewModel  
+public class PersonViewModel  
 {
-    public List<Person> Data { get; set; }      
+    public List<PersonModel> Data { get; set; }      
 
-    public ViewModel()       
+    public PersonViewModel()       
     {
-        Data = new List<Person>()
+        Data = new List<PersonModel>()
         {
-            new Person { Name = "David", Height = 170 },
-            new Person { Name = "Michael", Height = 96 },
-            new Person { Name = "Steve", Height = 65 },
-            new Person { Name = "Joel", Height = 182 },
-            new Person { Name = "Bob", Height = 134 }
+            new PersonModel { Name = "David", Height = 170 },
+            new PersonModel { Name = "Michael", Height = 96 },
+            new PersonModel { Name = "Steve", Height = 65 },
+            new PersonModel { Name = "Joel", Height = 182 },
+            new PersonModel { Name = "Bob", Height = 134 }
         }; 
     }
  }
 ```
 
-Set the `ViewModel` instance as the `BindingContext` of your page to bind `ViewModel` properties to the chart. 
+Set the `PersonViewModel` instance as the `BindingContext` of your page to bind `PersonViewModel` properties to the chart. 
  
-* Add namespace of `ViewModel` class to your XAML Page, if you prefer to set `BindingContext` in XAML.
+* Add namespace of `PersonViewModel` class to your XAML Page, if you prefer to set `BindingContext` in XAML.
 ###### Xaml
 ```xaml
 <ContentPage
@@ -111,7 +114,7 @@ Set the `ViewModel` instance as the `BindingContext` of your page to bind `ViewM
     xmlns:model="clr-namespace:ChartGettingStarted">
 
     <ContentPage.BindingContext>
-        <model:ViewModel></model:ViewModel>
+        <model:PersonViewModel/>
     </ContentPage.BindingContext>
 </ContentPage>
 ```
@@ -153,7 +156,7 @@ Run the project and check if you get following output to make sure you have conf
 
 ## Populate Chart with data
 
-As we are going to visualize the comparison of heights in the data model, add [ColumnSeries](https://help.syncfusion.com/cr/maui/Syncfusion.Maui.Charts.ColumnSeries.html?tabs=tabid-1) to [Series](https://help.syncfusion.com/cr/maui/Syncfusion.Maui.Charts.SfCartesianChart.html#Syncfusion_Maui_Charts_SfCartesianChart_Series) property of chart, and then bind the `Data` property of the above `ViewModel` to the `ColumnSeries.ItemsSource` as follows.
+As we are going to visualize the comparison of heights in the data model, add [ColumnSeries](https://help.syncfusion.com/cr/maui/Syncfusion.Maui.Charts.ColumnSeries.html?tabs=tabid-1) to [Series](https://help.syncfusion.com/cr/maui/Syncfusion.Maui.Charts.SfCartesianChart.html#Syncfusion_Maui_Charts_SfCartesianChart_Series) property of chart, and then bind the `Data` property of the above `PersonViewModel` to the `ColumnSeries.ItemsSource` as follows.
 
 * The cartesian chart has [Series](https://help.syncfusion.com/cr/maui/Syncfusion.Maui.Charts.SfCartesianChart.html#Syncfusion_Maui_Charts_SfCartesianChart_Series) as its default content.
 * You need to set [XBindingPath](https://help.syncfusion.com/cr/maui/Syncfusion.Maui.Charts.ChartSeries.html#Syncfusion_Maui_Charts_ChartSeries_XBindingPath) and [YBindingPath](https://help.syncfusion.com/cr/maui/Syncfusion.Maui.Charts.XYDataSeries.html#Syncfusion_Maui_Charts_XYDataSeries_YBindingPath)
@@ -200,7 +203,7 @@ chart.YAxes.Add(secondaryAxis);
 ColumnSeries series = new ColumnSeries();
 series.Label = "Height";
 series.ShowDataLabels = true;
-series.ItemsSource = (new ViewModel()).Data;
+series.ItemsSource = (new PersonViewModel()).Data;
 series.XBindingPath = "Name";
 series.YBindingPath = "Height";
 
@@ -279,9 +282,9 @@ The legend provides information about the data point displayed in the chart. The
 <chart:SfCartesianChart>
     . . .
     <chart:ColumnSeries Label="Height"
-                    ItemsSource="{Binding Data}"
-                    XBindingPath="Name" 
-                    YBindingPath="Height">
+                        ItemsSource="{Binding Data}"
+                        XBindingPath="Name" 
+                        YBindingPath="Height">
     </chart:ColumnSeries>
 </chart:SfCartesianChart>
 ```
@@ -289,7 +292,7 @@ The legend provides information about the data point displayed in the chart. The
 ###### C#
 ```C#
 ColumnSeries series = new ColumnSeries (); 
-series.ItemsSource = (new ViewModel()).Data;
+series.ItemsSource = (new PersonViewModel()).Data;
 series.XBindingPath = "Name"; 
 series.YBindingPath = "Height"; 
 series.Label = "Height";
@@ -314,7 +317,7 @@ Tooltips are used to show information about the segment, when a user hovers over
 ###### C#
 ```C#
 ColumnSeries series = new ColumnSeries();
-series.ItemsSource = (new ViewModel()).Data;
+series.ItemsSource = (new PersonViewModel()).Data;
 series.XBindingPath = "Name";          
 series.YBindingPath = "Height";
 series.EnableTooltip = true;
@@ -332,7 +335,7 @@ The following code example gives you the complete code of above configurations.
     xmlns:model="clr-namespace:ChartGettingStarted">
 
     <ContentPage.BindingContext>
-    <model:ViewModel></model:ViewModel>
+        <model:PersonViewModel/>
     </ContentPage.BindingContext>
 
     <ContentPage.Content>
@@ -411,7 +414,7 @@ namespace ChartGettingStarted
             {
                 Label = "Height",
                 ShowDataLabels = true,
-                ItemsSource = (new ViewModel()).Data,
+                ItemsSource = (new PersonViewModel()).Data,
                 XBindingPath = "Name",
                 YBindingPath = "Height",
                 DataLabelSettings = new CartesianDataLabelSettings
