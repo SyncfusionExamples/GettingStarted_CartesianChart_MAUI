@@ -6,23 +6,23 @@ using System.Threading.Tasks;
 
 namespace CartesianChartSample
 {
-    public class ViewModel
+    public class PersonViewModel
     {
-        public List<Person> Data { get; set; }
-        public ViewModel()
+        public List<PersonModel> Data { get; set; }
+        public PersonViewModel()
         {
-            Data = new List<Person>()
+            Data = new List<PersonModel>()
             {
-            new Person { Name = "David", Height = 170 },
-            new Person { Name = "Michael", Height = 96 },
-            new Person { Name = "Steve", Height = 65 },
-            new Person { Name = "Joel", Height = 182 },
-            new Person { Name = "Bob", Height = 134 }
+                new PersonModel { Name = "David", Height = 170 },
+                new PersonModel { Name = "Michael", Height = 96 },
+                new PersonModel { Name = "Steve", Height = 65 },
+                new PersonModel { Name = "Joel", Height = 182 },
+                new PersonModel { Name = "Bob", Height = 134 }
             };
         }
         
     }
-    public class Person
+    public class PersonModel
     {
         public string Name { get; set; }
         public double Height { get; set; }

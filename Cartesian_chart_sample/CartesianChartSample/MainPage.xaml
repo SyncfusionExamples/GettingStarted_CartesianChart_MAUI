@@ -8,7 +8,7 @@
     
 
     <ContentPage.BindingContext>
-        <model:ViewModel></model:ViewModel>
+        <model:PersonViewModel/>
     </ContentPage.BindingContext>
 
     <ContentPage.Content>
