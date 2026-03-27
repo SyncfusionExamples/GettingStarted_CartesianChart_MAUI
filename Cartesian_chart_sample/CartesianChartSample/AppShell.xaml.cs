@@ -1,9 +1,10 @@
-﻿namespace CartesianChartSample;
-
-public partial class AppShell : Shell
+﻿namespace CartesianChartSample
 {
-	public AppShell()
-	{
-		InitializeComponent();
-	}
+    public partial class AppShell : Shell
+    {
+        public AppShell()
+        {
+            InitializeComponent();
+        }
+    }
 }
